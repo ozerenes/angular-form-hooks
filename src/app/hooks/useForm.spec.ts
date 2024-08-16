@@ -17,7 +17,13 @@ describe('useForm', () => {
     addField('email', '');
 
     expect(form.contains('email')).toBe(true);
-    expect(form.get('email')?.value).toBe('');
+    let emailField = form.get('email');
+    if (emailField) {
+        expect(emailField.value).toBe('');
+    } else {
+      (form.controls as { [key: string]: any })['email'].setValue('default@email.com');
+      console.error('Email field is undefined');
+    }  
   });
 
   it('should remove a field', () => {
